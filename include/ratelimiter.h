@@ -20,14 +20,14 @@
   #define RL_DEBUG(x) do {} while (0)
 #endif
 
-namespace dimxy {
+namespace flo1cpp {
     /// Multithreaded rate limiter protecting a service or API from overloading, with support of rps and burst limits.
     /// Returns true or waits until the current rps meets the limit.
     /// Returns false immediately if total requests in one ms exceeds the burst limit.
     ///
     /// Usage:
     /// ```
-    /// dimxy::RateLimiter rl(3.0, 1000);
+    /// flo1cpp::RateLimiter rl(3.0, 1000);
     /// if (rl.acquire(100)) {
     ///     <call your system>
     /// }

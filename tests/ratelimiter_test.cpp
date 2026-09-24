@@ -10,7 +10,7 @@ long get_time_ms() {
 }
 
 TEST(RateLimiterTest, AcquireWithinZeroLimit) {
-    dimxy::RateLimiter rl(0.0, 1000);
+    flo1cpp::RateLimiter rl(0.0, 1000);
     auto t0 = get_time_ms();
     EXPECT_TRUE(rl.acquire(1));
     auto t1 = get_time_ms();
@@ -18,7 +18,7 @@ TEST(RateLimiterTest, AcquireWithinZeroLimit) {
 }
 
 TEST(RateLimiterTest, AcquireWithinLimit) {
-    dimxy::RateLimiter rl(100.0, 1000);
+    flo1cpp::RateLimiter rl(100.0, 1000);
     auto t0 = get_time_ms();
     EXPECT_TRUE(rl.acquire(1));
     auto t1 = get_time_ms();
@@ -26,17 +26,17 @@ TEST(RateLimiterTest, AcquireWithinLimit) {
 }
 
 TEST(RateLimiterTest, RejectsNegativeRequests) {
-    dimxy::RateLimiter rl(100.0, 1000);
+    flo1cpp::RateLimiter rl(100.0, 1000);
     EXPECT_FALSE(rl.acquire(-1));
 }
 
 TEST(RateLimiterTest, RejectsOverBurst) {
-    dimxy::RateLimiter rl(100.0, 5);
+    flo1cpp::RateLimiter rl(100.0, 5);
     EXPECT_FALSE(rl.acquire(10));
 }
 
 TEST(RateLimiterTest, AcquireWait2x) {
-    dimxy::RateLimiter my_rl(10.0, 1000);
+    flo1cpp::RateLimiter my_rl(10.0, 1000);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(8));
     EXPECT_TRUE(my_rl.acquire(9));
@@ -46,7 +46,7 @@ TEST(RateLimiterTest, AcquireWait2x) {
 }
 
 TEST(RateLimiterTest, AcquireWithinLimit3x) {
-    dimxy::RateLimiter my_rl(10.0, 1000);
+    flo1cpp::RateLimiter my_rl(10.0, 1000);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(2));
     EXPECT_TRUE(my_rl.acquire(2));
@@ -57,13 +57,13 @@ TEST(RateLimiterTest, AcquireWithinLimit3x) {
 
 /* This test is flaky:
 TEST(RateLimiterTest, RejectsOverBurst3x) {
-    dimxy::RateLimiter my_rl(10.0, 10);
+    flo1cpp::RateLimiter my_rl(10.0, 10);
     EXPECT_TRUE(my_rl.acquire(2));
     EXPECT_FALSE(my_rl.acquire(9));
 }*/
 
 TEST(RateLimiterTest, AcquireWithinLimit3xNoBurst) {
-    dimxy::RateLimiter my_rl(10.0, 10);
+    flo1cpp::RateLimiter my_rl(10.0, 10);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(2));
     EXPECT_TRUE(my_rl.acquire(2));
@@ -75,7 +75,7 @@ TEST(RateLimiterTest, AcquireWithinLimit3xNoBurst) {
 }
 
 TEST(RateLimiterTest, AcquireWithinLimit3xWithDelays) {
-    dimxy::RateLimiter my_rl(10.0, 10);
+    flo1cpp::RateLimiter my_rl(10.0, 10);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(9));
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
@@ -88,7 +88,7 @@ TEST(RateLimiterTest, AcquireWithinLimit3xWithDelays) {
 }
 
 TEST(RateLimiterTest, RejectOverBurstInThread) {
-    dimxy::RateLimiter my_rl(10.0, 10);
+    flo1cpp::RateLimiter my_rl(10.0, 10);
     std::thread th([&]() { 
         std::this_thread::sleep_for(std::chrono::seconds(2));
         my_rl.shutdown(); 
@@ -99,7 +99,7 @@ TEST(RateLimiterTest, RejectOverBurstInThread) {
 }
 
 TEST(RateLimiterTest, InfiniteLoopFixWithCeil) {
-    dimxy::RateLimiter my_rl(3.0, 10);
+    flo1cpp::RateLimiter my_rl(3.0, 10);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(4));
     EXPECT_TRUE(my_rl.acquire(3));
@@ -109,7 +109,7 @@ TEST(RateLimiterTest, InfiniteLoopFixWithCeil) {
 }
 
 TEST(RateLimiterTest, AcquireBigRequestOverLimit) {
-    dimxy::RateLimiter my_rl(3.0, 100);
+    flo1cpp::RateLimiter my_rl(3.0, 100);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(99));
     std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -120,7 +120,7 @@ TEST(RateLimiterTest, AcquireBigRequestOverLimit) {
 }
 
 TEST(RateLimiterTest, AcquireMultipleRequestsOverLimit) {
-    dimxy::RateLimiter my_rl(3.0, 20);
+    flo1cpp::RateLimiter my_rl(3.0, 20);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(1));
     std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -149,7 +149,7 @@ TEST(RateLimiterTest, AcquireMultipleRequestsOverLimit) {
 }
 
 TEST(RateLimiterTest, AcquireMultipleRequestsEachOverLimit) {
-    dimxy::RateLimiter my_rl(3.0, 20);
+    flo1cpp::RateLimiter my_rl(3.0, 20);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(19));
     std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -168,7 +168,7 @@ TEST(RateLimiterTest, AcquireMultipleRequestsEachOverLimit) {
 }
 
 TEST(RateLimiterTest, AcquireWithinLimitInThreads) {
-    dimxy::RateLimiter my_rl(3.0, 30);
+    flo1cpp::RateLimiter my_rl(3.0, 30);
     auto t0 = get_time_ms();
     std::thread th1([&]() {
         EXPECT_TRUE(my_rl.acquire(4));
@@ -185,7 +185,7 @@ TEST(RateLimiterTest, AcquireWithinLimitInThreads) {
 }
 
 TEST(RateLimiterTest, AcquireWithinLimitInThreadsWithDelay) {
-    dimxy::RateLimiter my_rl(3.0, 30);
+    flo1cpp::RateLimiter my_rl(3.0, 30);
     auto t0 = get_time_ms();
     std::thread th1([&]() {
         EXPECT_TRUE(my_rl.acquire(4));
@@ -203,7 +203,7 @@ TEST(RateLimiterTest, AcquireWithinLimitInThreadsWithDelay) {
 }
 
 TEST(RateLimiterTest, AcquireWaitForLimitInThreadsWithDelay) {
-    dimxy::RateLimiter my_rl(10.0, 30);
+    flo1cpp::RateLimiter my_rl(10.0, 30);
     auto t0 = get_time_ms();
     std::thread th1([&]() {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -223,7 +223,7 @@ TEST(RateLimiterTest, AcquireWaitForLimitInThreadsWithDelay) {
 TEST(RateLimiterTest, AcquireInThreadsWithDelayedStart) {
     std::vector<std::pair<int, int>> d = {{0, 0}, {10, 0}, {0, 10}, {10, 10}};
     for (auto p : d) {
-        dimxy::RateLimiter my_rl(10.0, 100);
+        flo1cpp::RateLimiter my_rl(10.0, 100);
         int d1 = p.first;
         int d2 = p.second;
         
@@ -251,7 +251,7 @@ TEST(RateLimiterTest, AcquireInThreadsWithDelayedStart) {
 // First acquire call is over limit so it waits.
 // The second call follows immediately and the rate limiter recalculates (decays) the internal total requests counter to non-zero value
 TEST(RateLimiterTest, AcquireWithTotalReqsDecayTotalReqs) {
-    dimxy::RateLimiter my_rl(3.0, 1000);
+    flo1cpp::RateLimiter my_rl(3.0, 1000);
     auto t0 = get_time_ms();
     EXPECT_TRUE(my_rl.acquire(27));
     EXPECT_TRUE(my_rl.acquire(9));
