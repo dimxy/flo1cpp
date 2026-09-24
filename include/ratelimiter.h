@@ -73,10 +73,6 @@ namespace flo1cpp {
             RL_DEBUG("Shutdown complete.");
         }
 
-        bool test_no_pending() {
-            return true;
-        }
-
     private:
         bool acquire_impl(int n_reqs, std::unique_lock<std::mutex> &lck) {
             std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
