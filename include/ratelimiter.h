@@ -27,9 +27,9 @@ namespace dimxy {
     ///
     /// Usage:
     /// ```
-    /// RateLimiter rl(3.0, 1000);
+    /// dimxy::RateLimiter rl(3.0, 1000);
     /// if (rl.acquire(100)) {
-    ///     <call protected system>
+    ///     <call your system>
     /// }
     /// ```
     class RateLimiter {
