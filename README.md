@@ -10,6 +10,10 @@ Multithreaded black box rate limiter, to protect your API from overload.
 Set this repo as a dependency in your project (or, simply clone the repo and `#include "ratelimiter.h"`).<br>
 Check RateLimiter class doc comment and the examples dir for usage.
 
+### C++ version
+CPP version: C++11 and up.<br>
+CPP version for google tests: C++14 and up.<br>
+
 ### How to build and run tests
 Building tests:
 ```
