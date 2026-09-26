@@ -11,10 +11,7 @@ long get_time_ms() {
 
 TEST(RateLimiterTest, AcquireWithinZeroLimit) {
     flo1cpp::RateLimiter rl(0.0, 1000);
-    auto t0 = get_time_ms();
-    EXPECT_TRUE(rl.acquire(1));
-    auto t1 = get_time_ms();
-    EXPECT_TRUE(t1 - t0 < 100);
+    EXPECT_FALSE(rl.acquire(1));
 }
 
 TEST(RateLimiterTest, AcquireWithinLimit) {

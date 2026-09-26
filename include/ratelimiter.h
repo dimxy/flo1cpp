@@ -46,8 +46,7 @@ namespace flo1cpp {
 
         bool acquire(int n_reqs) {
             std::unique_lock<std::mutex> lck(m_mtx);
-            if (init_shutdown || n_reqs < 0) return false;
-            if (m_rps <= 0) return true;
+            if (init_shutdown || m_rps <= 0 || n_reqs < 0) return false;
             ++ m_enters;
             RL_DEBUG(__func__ << " enterred" );
             bool ret = false;
